@@ -27,8 +27,7 @@ function changeColor() {
     }
     
     timerId = setInterval(() => {
-        const color = '#' + Math.random().toString(16).slice(2, 8);
-        document.body.style.backgroundColor = color;
+        document.body.style.backgroundColor = getRandomHexColor();
     }, 1000);
     isActive = true;
     refs.startColorSwitcherBtn.style.opacity = '.5';
@@ -42,4 +41,7 @@ function stopSwitcher() {
     return clearInterval(timerId);
 }
 
+function getRandomHexColor() {
+    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+}
 
