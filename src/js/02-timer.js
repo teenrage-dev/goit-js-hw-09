@@ -105,3 +105,13 @@ function viewTime(time) {
 
 // STYLES
 refs.timerBox.style.display = 'flex';
+refs.textValue.forEach(el => {
+    el.style.display = 'flex';
+    el.style.textAlign = 'center';
+    el.style.fontSize = '2rem';
+
+});
+refs.labelValue.forEach(el => {
+    el.style.display = 'flex';
+    el.style.marginRight = '10px';
+});
