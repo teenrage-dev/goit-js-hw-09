@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const refs = {
   form: document.querySelector(".form"),
 };
@@ -37,10 +38,10 @@ function onClick(e) {
 
       createPromise(step, delay)
         .then(({ position, delay }) => {
-          console.log(`✅ Fulfilled promise ${i + 1} in ${totalStep}}ms`);
+          Notify.success(`✅ Fulfilled promise ${i + 1} in ${totalStep}}ms`);
         })
         .catch(({ position, delay }) => {
-          console.log(`❌ Rejected promise ${i + 1} in ${totalStep}ms`);
+          Notify.failure(`❌ Rejected promise ${i + 1} in ${totalStep}ms`);
         });
     }
     // console.log(delay, step, amount);
