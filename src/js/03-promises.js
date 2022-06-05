@@ -31,17 +31,18 @@ function onClick(e) {
     const step = e.target.elements.step.value;
     const amount = e.target.elements.amount.value;
 
-    for(let i = 1; i <= amount; i += 1) {
+    for(let i = 0; i < amount; i += 1) {
+
       let totalStep = Number(delay) + ( Number(step) * i );
+
       createPromise(step, delay)
-      .then(({ position, delay }) => {
-        console.log(`✅ Fulfilled promise ${i} in ${totalStep}}ms`);
-      })
-      .catch(({ position, delay }) => {
-        console.log(`❌ Rejected promise ${i} in ${totalStep}ms`);
-      });
-      
+        .then(({ position, delay }) => {
+          console.log(`✅ Fulfilled promise ${i + 1} in ${totalStep}}ms`);
+        })
+        .catch(({ position, delay }) => {
+          console.log(`❌ Rejected promise ${i + 1} in ${totalStep}ms`);
+        });
     }
-    // console.log(step, delay, amount);
+    // console.log(delay, step, amount);
 };
 
