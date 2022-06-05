@@ -11,12 +11,30 @@ const refs = {
     timerHours: document.querySelector('span[data-hours]'),
     timerMinutes: document.querySelector('span[data-minutes]'),
     timerSeconds: document.querySelector('span[data-seconds]'),
+    textValue: document.querySelectorAll('.value'),
+    labelValue: document.querySelectorAll('.label'),
 };
 
 refs.buttonData.disabled = true;
 const CURRENT_DATE = new Date();
+let timeFinish;
 
-
+const timer = {
+    timerId: null,
+    isActive: false,
+    start() {
+        if (this.isActive) {
+            return;
+        }
+        this.timerId = setInterval(() => {
+            const delta = new Date(timeFinish) - new Date();
+            const timeComponents = convertMs(delta);
+            viewTime(timeComponents);
+        }, 1000);
+        
+        this.isActive = true;
+    },
+}
 
 
 const options = {
@@ -30,44 +48,23 @@ const options = {
             window.alert('Please choose a date in the future');
         } else {
             refs.buttonData.disabled = false;
-            refs.buttonData.addEventListener('click', timer.start());
-            console.log(convertMs(timeFinish));
+            refs.buttonData.addEventListener('click', timer.start);
         };
     }, 
 };
+
 const fp = flatpickr(refs.input, options);
-
-let timeFinish = fp.selectedDates[0].getTime();
-
-console.log(convertMs(timeFinish));
-
-
-const timer = {
-    timerId: null,
-    isActive: false,
-    start(startTime) {
-        if (this.isActive) {
-            return;
-        }
-        this.timerId = setInterval(() => {
-            const delta = new Date(timeFinish) - new Date();
-            const timeComponents = convertMs(delta);
-            viewTime(timeComponents);
-            console.log(new Date(timeFinish).getTime());
-        }, 1000);
-        
-        this.isActive = true;
-    },
+function start() {
+    timeFinish = new Date(fp.selectedDates[0].getTime());
+    console.log(timeFinish);
 }
 
+refs.buttonData.addEventListener('click', start);
 
 
 function selectDate(selectTime) {
     Date.parse(selectTime); 
 };
-
-
-
 
 
 function convertMs(ms) { 
