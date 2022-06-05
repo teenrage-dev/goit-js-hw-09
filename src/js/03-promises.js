@@ -46,3 +46,4 @@ function onClick(e) {
     // console.log(delay, step, amount);
 };
 
+// Зробити задачу я зробив, але чи логіка правилна, не знаю?
