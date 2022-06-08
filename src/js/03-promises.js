@@ -1,26 +1,26 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const refs = {
   form: document.querySelector(".form"),
+  inputStep: document.querySelector("input[name=step]"),
 };
+
+
+let waitStep = Number(refs.inputStep.value);
+
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    // Fulfill
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ position, delay });
-      }, delay);
-    });
-  }
-  else {
-    // Reject
-      return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject({ position, delay });
-      }, delay);
-    })
-    }
+  let promice = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve(position, delay);
+      } else {
+        reject(position, delay);
+      }
+    }, delay);
+  });
+
+  return promice;
 };
 
 refs.form.addEventListener("submit", onClick);
@@ -33,18 +33,16 @@ function onClick(e) {
     const amount = e.target.elements.amount.value;
 
     for(let i = 0; i < amount; i += 1) {
-
+      const position = i;
       let totalStep = Number(delay) + ( Number(step) * i );
-
-      createPromise(step, delay)
-        .then(({ position, delay }) => {
+      createPromise(position, totalStep)
+        .then(() => {
           Notify.success(`✅ Fulfilled promise ${i + 1} in ${totalStep}}ms`);
         })
-        .catch(({ position, delay }) => {
+        .catch(() => {
           Notify.failure(`❌ Rejected promise ${i + 1} in ${totalStep}ms`);
         });
     }
     // console.log(delay, step, amount);
 };
 
-// Зробити задачу я зробив, але чи логіка правилна, не знаю?
